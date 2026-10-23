@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- 1. Home Page -->
+  <url>
+    <loc>https://highriseinteriors.in/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-hero.jpg</image:loc>
+      <image:title>Modern Luxury Living Suite Hyderabad | High Rise Interiors</image:title>
+      <image:caption>Bespoke luxury villa and penthouse living spaces in Hyderabad by High Rise Interiors.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-interior.png</image:loc>
+      <image:title>Balanced Luxury Living and Dining Salon | High Rise Interiors</image:title>
+      <image:caption>Architectural dining and living salon crafted for premium gated community apartments and villas.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/walk-in-wardrobe.jpg</image:loc>
+      <image:title>Bespoke Master Walk-in Wardrobe &amp; Dressing Suite | High Rise Interiors</image:title>
+      <image:caption>Custom walk-in closet with integrated LED profiles, smoked glass, and German modular fittings.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/logo.png</image:loc>
+      <image:title>High Rise Interiors Brand Emblem</image:title>
+      <image:caption>High Rise Interiors - Luxury villa and gated community interior design atelier in Hyderabad.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 2. Villas & Private Estates -->
+  <url>
+    <loc>https://highriseinteriors.in/villas.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/villas.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/villas.html" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-hero.jpg</image:loc>
+      <image:title>Luxury Villa Architecture and Turnkey Services Hyderabad</image:title>
+      <image:caption>Turnkey interior architecture for 4,000 to 15,000+ sq. ft. luxury villas across Hyderabad.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/walk-in-wardrobe.jpg</image:loc>
+      <image:title>Villa Master Dressing Suite and Walk-in Wardrobe</image:title>
+      <image:caption>Custom architectural joinery and Italian finishes for luxury villa master suites.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 3. Gated Communities & Luxury Apartments -->
+  <url>
+    <loc>https://highriseinteriors.in/gated-communities.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/gated-communities.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/gated-communities.html" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-interior.png</image:loc>
+      <image:title>Gated Community Apartment Interiors Hyderabad</image:title>
+      <image:caption>Turnkey 3BHK, 4BHK, and penthouse interiors in Rajapushpa, My Home, Aparna, and Jayabheri enclaves.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-theme.png</image:loc>
+      <image:title>Curated Color &amp; Material Palettes for Gated Communities</image:title>
+      <image:caption>Warm noble stone, walnut timber, champagne gold, and fluted acoustic panelling for high-rise apartments.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 4. Luxury Houses & Signature Estates Portfolio -->
+  <url>
+    <loc>https://highriseinteriors.in/luxury-houses.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/luxury-houses.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/luxury-houses.html" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-hero.jpg</image:loc>
+      <image:title>Signature Estates and Luxury Residences Archive Hyderabad</image:title>
+      <image:caption>Completed private estates, triplex penthouses, and neoclassical villas delivered with turnkey precision.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 5. Curated Living Collections -->
+  <url>
+    <loc>https://highriseinteriors.in/collections.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/collections.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/collections.html" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-interior.png</image:loc>
+      <image:title>Curated Living Collections 2026 | High Rise Interiors</image:title>
+      <image:caption>Luxury modular cabinetry, statement lighting, and bespoke ergonomic furnishings.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/products/algerone_sofa.png</image:loc>
+      <image:title>Algerone Luxury Sofa Collection</image:title>
+      <image:caption>High Rise Interiors Algerone architectural sofa upholstered in premium velvet with brushed brass accents.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/products/algerone_dining_table.png</image:loc>
+      <image:title>Algerone Grand Dining Table</image:title>
+      <image:caption>Statement marble dining table with geometric leather and brass detailing.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/products/babel_chandelier.jpg</image:loc>
+      <image:title>Babel Luxury Crystal Chandelier</image:title>
+      <image:caption>Multi-tiered crystal chandelier for double-height villa living rooms and grand entry foyers.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/products/waterfall_chandelier.png</image:loc>
+      <image:title>Waterfall Suspension Chandelier</image:title>
+      <image:caption>Gold-plated brass and ribbed crystal glass suspension lighting fixture.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 6. Architectural Catalogues & Lookbooks -->
+  <url>
+    <loc>https://highriseinteriors.in/downloads.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://highriseinteriors.in/downloads.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://highriseinteriors.in/downloads.html" />
+    <image:image>
+      <image:loc>https://highriseinteriors.in/assets/images/balanced-luxury-hero.jpg</image:loc>
+      <image:title>Interior Architecture Lookbooks and Specification Matrices</image:title>
+      <image:caption>Downloadable high-resolution architectural lookbooks and material matrices for Hyderabad luxury residences.</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

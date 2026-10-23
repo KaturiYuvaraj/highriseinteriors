@@ -3261,6 +3261,18 @@ select.form-select,
   color: #D9CBB8 !important;
 }
 
+.developer-credit a {
+  color: var(--gold-accent) !important;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast), text-decoration var(--transition-fast);
+}
+
+.developer-credit a:hover {
+  color: var(--gold-light) !important;
+  text-decoration: underline !important;
+}
+
 .footer-section .border-white-15 {
   border-color: rgba(217, 203, 184, 0.35) !important;
 }

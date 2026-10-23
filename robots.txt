@@ -1,0 +1,15 @@
+# Robots.txt for High Rise Interiors
+# Domain: https://highriseinteriors.in/
+
+User-agent: *
+Allow: /
+Disallow: /scratch/
+
+# Crawl Delay to prevent server strain
+Crawl-delay: 1
+
+# Host definition
+Host: https://highriseinteriors.in
+
+# XML Sitemaps
+Sitemap: https://highriseinteriors.in/sitemap.xml

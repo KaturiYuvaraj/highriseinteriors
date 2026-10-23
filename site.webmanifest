@@ -1,0 +1,25 @@
+{
+  "name": "High Rise Interiors | Luxury Villa & Gated Community Interiors",
+  "short_name": "HighRise Interiors",
+  "description": "Bespoke interior architecture, modular engineering, and turnkey luxury execution for luxury villas and gated communities in Hyderabad.",
+  "start_url": "https://highriseinteriors.in/",
+  "scope": "https://highriseinteriors.in/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#C5A880",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

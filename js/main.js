@@ -1404,7 +1404,7 @@ function initChatbot() {
     // 9. Contact / WhatsApp
     if (text.includes("contact") || text.includes("phone") || text.includes("call") || text.includes("number") || text.includes("location") || text.includes("address")) {
       return `You can reach our design studio directly:<br><br>
-        📞 <strong>WhatsApp / Phone:</strong> +91 75698 26055<br>
+        📞 <strong>WhatsApp / Phone:</strong> +91 7569826055<br>
         📍 <strong>Location:</strong> Hyderabad, Telangana<br>
         ⏰ <strong>Hours:</strong> Mon – Sat: 9:30 AM – 7:30 PM<br><br>
         <a href="https://wa.me/${CONFIG.WHATSAPP_NUMBER}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-gold mt-1">
