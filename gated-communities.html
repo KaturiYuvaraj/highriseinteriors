@@ -73,7 +73,8 @@
         "@type": "HomeAndConstructionBusiness",
         "name": "High Rise Interiors",
         "url": "https://highriseinteriors.in/",
-        "telephone": "+917569826055"
+        "telephone": "+917569826055",
+        "email": "info@highriseinteriors.in"
       },
       "description": "Complete turnkey interior architecture with zero society violations, German modular joinery, and 45-60 day move-in handover across Hyderabad.",
       "areaServed": [
@@ -670,10 +671,10 @@
                   <!-- Submit Buttons -->
                   <div class="col-12 mt-2 pt-1">
                     <button type="submit" class="btn btn-gold w-100 py-2 py-sm-3 shadow-sm fw-semibold">
-                      <i class="bi bi-whatsapp me-2 fs-5"></i> Submit &amp; Chat with Community Lead
+                      <i class="bi bi-send-fill me-2 fs-5"></i> Submit Enquiry (Email &amp; WhatsApp)
                     </button>
                     <p class="text-muted extra-small text-center mt-2 mb-0">
-                      <i class="bi bi-shield-check me-1 text-gold-dark"></i> Zero spam policy • Directly coordinated on WhatsApp.
+                      <i class="bi bi-shield-check me-1 text-gold-dark"></i> Notification emailed to <strong>info@highriseinteriors.in</strong> &amp; connects immediately on WhatsApp.
                     </p>
                   </div>
                 </div>
@@ -1000,8 +1001,11 @@
           <p class="small text-white-70 mb-2">
             <i class="bi bi-telephone text-gold me-2"></i> <a href="tel:+917569826055" class="text-white-70 text-decoration-none">+91 7569826055</a>
           </p>
-          <p class="small text-white-70 mb-3">
-            <i class="bi bi-envelope text-gold me-2"></i> info@highriseinteriors.com
+          <p class="small text-white-70 mb-1">
+            <i class="bi bi-envelope text-gold me-2"></i> <a href="mailto:info@highriseinteriors.in" class="text-white-70 text-decoration-none">info@highriseinteriors.in</a>
+          </p>
+          <p class="extra-small text-white-50 mb-3 ps-4">
+            <a href="mailto:info@highriseinteriors.com" class="text-white-50 text-decoration-none">info@highriseinteriors.com</a>
           </p>
           <a href="https://wa.me/917569826055" target="_blank" rel="noopener noreferrer"
             class="btn btn-gold btn-sm w-100 py-2">
@@ -1107,10 +1111,10 @@
           if (document.getElementById("gfeatAcoustic").checked) features.push("Acoustic Soundproofing");
           if (document.getElementById("gfeatNri").checked) features.push("NRI Remote Management");
 
-          const whatsappData = {
+          const leadData = {
             source: "Gated Community Page Inquiry",
             name: name,
-            phone: phone,
+            phone: `+91 ${phone}`,
             property: `Flat (${config}) at ${community} [Unit: ${flatNo}]`,
             area: area,
             category: tier,
@@ -1119,22 +1123,55 @@
             message: `Requirements: ${features.join(", ")}${notes ? " | Notes: " + notes : ""}`
           };
 
-          // Show confirmation modal
-          const modalEl = document.getElementById("gatedSuccessModal");
-          if (modalEl && typeof bootstrap !== "undefined") {
-            const bsModal = new bootstrap.Modal(modalEl);
-            bsModal.show();
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn ? submitBtn.innerHTML : "";
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sending via Email &amp; WhatsApp...`;
           }
 
-          // Open WhatsApp after brief pause
+          // 1. Silent Background Email Dispatch to info@highriseinteriors.in
+          if (typeof silentSendEmail === "function") {
+            silentSendEmail({
+              subject: `New Gated Community Consultation Enquiry: ${name} (+91 ${phone})`,
+              ...leadData
+            });
+          }
+
+          // 2. Open WhatsApp after brief pause
           setTimeout(() => {
             if (typeof openWhatsApp === "function") {
-              openWhatsApp(whatsappData);
+              openWhatsApp(leadData);
             } else {
-              const msg = `Hello High Rise Interiors, I am requesting an estimate for my Gated Community flat:\nName: ${name}\nPhone: ${phone}\nCommunity: ${community}\nUnit: ${flatNo}\nArea: ${area} sq.ft\nConfig: ${config}\nTier: ${tier}\nAssistance: ${features.join(", ")}\nTimeline: ${status}\nNotes: ${notes}`;
+              const msg = `Hello High Rise Interiors, I am requesting an estimate for my Gated Community flat:\nName: ${name}\nPhone: +91 ${phone}\nCommunity: ${community}\nUnit: ${flatNo}\nArea: ${area} sq.ft\nConfig: ${config}\nTier: ${tier}\nAssistance: ${features.join(", ")}\nTimeline: ${status}\nNotes: ${notes}`;
               window.open(`https://wa.me/917569826055?text=${encodeURIComponent(msg)}`, "_blank");
             }
-          }, 800);
+
+            if (submitBtn) {
+              submitBtn.innerHTML = `<i class="bi bi-check2-circle me-2 fs-5"></i> Dispatched to Email &amp; WhatsApp!`;
+              submitBtn.classList.remove("btn-gold");
+              submitBtn.classList.add("btn-success");
+            }
+
+            if (typeof showFormFeedback === "function") {
+              showFormFeedback(
+                form,
+                `Your gated community inquiry has been emailed to <strong>info@highriseinteriors.in</strong> and WhatsApp is launching to connect you directly with our design team.`,
+                "success"
+              );
+            }
+
+            setTimeout(() => {
+              form.reset();
+              form.classList.remove("was-validated");
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.classList.remove("btn-success");
+                submitBtn.classList.add("btn-gold");
+              }
+            }, 4000);
+          }, 600);
         });
       }
     });

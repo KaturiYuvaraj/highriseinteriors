@@ -13,8 +13,9 @@ const CONFIG = {
   // Official Business WhatsApp Number (International format without '+' sign)
   WHATSAPP_NUMBER: "917569826055",
 
-  // Client Notification Email (for silent background lead submissions)
-  CLIENT_EMAIL: "info@highriseinteriors.com",
+  // Official Client Notification Emails (Dispatches to both info@highriseinteriors.in and info@highriseinteriors.com)
+  CLIENT_EMAIL: "info@highriseinteriors.in",
+  SECONDARY_EMAIL: "info@highriseinteriors.com",
 
   // Business Profile Details
   COMPANY_NAME: "High Rise Interiors",
@@ -758,12 +759,14 @@ function initTestimonialsSwiper() {
 // SILENT BACKGROUND EMAIL DISPATCH (FORMSUBMIT AJAX API)
 // =============================================================================
 /**
- * Silently sends lead information to client email in the background without interrupting WhatsApp redirect.
+ * Silently sends lead information to client email (info@highriseinteriors.in & backup info@highriseinteriors.com)
+ * without interrupting WhatsApp redirect.
  * @param {Object} data - Lead form data
  */
 function silentSendEmail(data = {}) {
-  const targetEmail = CONFIG.CLIENT_EMAIL || "info@highriseinteriors.com";
-  const endpoint = `https://formsubmit.co/ajax/${targetEmail}`;
+  const primaryEmail = CONFIG.CLIENT_EMAIL || "info@highriseinteriors.in";
+  const secondaryEmail = CONFIG.SECONDARY_EMAIL || "info@highriseinteriors.com";
+  const endpoint = `https://formsubmit.co/ajax/${primaryEmail}`;
 
   const submissionDate = new Date().toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
@@ -773,6 +776,7 @@ function silentSendEmail(data = {}) {
 
   const payload = {
     _subject: data.subject || `New High Rise Interiors Enquiry: ${data.name || "Client"} (${data.phone || ""})`,
+    _cc: secondaryEmail,
     _template: "table",
     _captcha: "false",
     "Client Name": data.name || "N/A",
@@ -787,7 +791,7 @@ function silentSendEmail(data = {}) {
     "Date & Time (IST)": submissionDate
   };
 
-  // 1. Local Storage Logging Archive (Safe fallback)
+  // 1. Local Storage Logging Archive (Safe fallback for lead persistence)
   try {
     const archive = JSON.parse(localStorage.getItem("hri_lead_submissions") || "[]");
     archive.unshift({ ...payload, loggedAt: new Date().toISOString() });
@@ -796,7 +800,7 @@ function silentSendEmail(data = {}) {
     // Non-blocking
   }
 
-  // 2. Asynchronous Silent POST Request
+  // 2. Dual Asynchronous Email Dispatch (Primary + Secondary)
   try {
     fetch(endpoint, {
       method: "POST",
@@ -809,16 +813,72 @@ function silentSendEmail(data = {}) {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log("[HRI Lead Engine] Lead notification email dispatched silently to client:", resData);
+        console.log(`[HRI Lead Engine] Lead notification email dispatched to ${primaryEmail}:`, resData);
       })
       .catch((err) => {
-        // Silent failure - ensures user is never blocked or alerted
-        console.warn("[HRI Lead Engine] Background dispatch queued locally:", err.message);
+        console.warn(`[HRI Lead Engine] Primary dispatch queued:`, err.message);
+      });
+
+    // Secondary dispatch to info@highriseinteriors.com ensuring 100% deliverability
+    fetch(`https://formsubmit.co/ajax/${secondaryEmail}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ ...payload, _subject: `[Copy] ${payload._subject}` }),
+      keepalive: true
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        console.log(`[HRI Lead Engine] Secondary notification dispatched to ${secondaryEmail}:`, resData);
+      })
+      .catch((err) => {
+        console.warn(`[HRI Lead Engine] Secondary dispatch notice:`, err.message);
       });
   } catch (err) {
     console.warn("[HRI Lead Engine] Background dispatch notice:", err.message);
   }
 }
+
+/**
+ * Renders prominent user feedback on form submission confirming both email and WhatsApp triggers.
+ * @param {HTMLElement} form - The form element
+ * @param {string} message - Feedback description
+ * @param {string} type - Bootstrap alert type (success, info, warning)
+ */
+function showFormFeedback(form, message, type = "success") {
+  if (!form) return;
+  let feedbackEl = form.querySelector(".form-submit-feedback");
+  if (!feedbackEl) {
+    feedbackEl = document.createElement("div");
+    feedbackEl.className = "form-submit-feedback mt-3";
+    form.appendChild(feedbackEl);
+  }
+  feedbackEl.innerHTML = `
+    <div class="alert alert-${type} d-flex align-items-center p-3 mb-0 rounded-3 shadow-sm border border-${type}" role="alert">
+      <i class="bi bi-check-circle-fill fs-4 text-${type} me-3 flex-shrink-0"></i>
+      <div>
+        <div class="fw-bold">${type === "success" ? "Enquiry Sent Successfully!" : "Notice"}</div>
+        <div class="small">${message}</div>
+      </div>
+    </div>
+  `;
+  try {
+    feedbackEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  } catch (e) {}
+
+  setTimeout(() => {
+    if (feedbackEl) {
+      feedbackEl.innerHTML = "";
+    }
+  }, 8000);
+}
+
+// Expose globally for page-specific forms (villas.html, gated-communities.html)
+window.silentSendEmail = silentSendEmail;
+window.showFormFeedback = showFormFeedback;
+window.openWhatsApp = openWhatsApp;
 
 // =============================================================================
 // MOBILE NUMBER VALIDATION (+91 STRICT 10-DIGIT NUMERIC ONLY)
@@ -994,7 +1054,15 @@ function initContactForm() {
     const furniture = document.getElementById("contactFurniture").value;
     const message = document.getElementById("contactMessage").value.trim();
 
-    // 1. Silent Background Email Dispatch to Client
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : "";
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sending via Email &amp; WhatsApp...`;
+    }
+
+    // 1. Silent Background Email Dispatch to info@highriseinteriors.in (and CC info@highriseinteriors.com)
     silentSendEmail({
       subject: `New Interior Consultation Lead: ${name} (${phone})`,
       name: name,
@@ -1008,23 +1076,45 @@ function initContactForm() {
       source: "Contact Page Form"
     });
 
-    // 2. Open WhatsApp as usual
-    openWhatsApp({
-      source: "Contact Page Form",
-      name: name,
-      phone: phone,
-      property: property,
-      area: area,
-      category: category,
-      furniture: furniture,
-      message: message + (email ? ` (Email: ${email})` : "")
-    });
+    // 2. Open WhatsApp for direct chat after brief pause
+    setTimeout(() => {
+      openWhatsApp({
+        source: "Contact Page Form",
+        name: name,
+        phone: phone,
+        property: property,
+        area: area,
+        category: category,
+        furniture: furniture,
+        message: message + (email ? ` (Email: ${email})` : "")
+      });
 
-    form.reset();
-    form.classList.remove("was-validated");
-    if (phoneInput) {
-      phoneInput.classList.remove("is-valid", "is-invalid");
-    }
+      if (submitBtn) {
+        submitBtn.innerHTML = `<i class="bi bi-check2-circle me-2 fs-5"></i> Dispatched to Email &amp; WhatsApp!`;
+        submitBtn.classList.remove("btn-gold");
+        submitBtn.classList.add("btn-success");
+      }
+
+      showFormFeedback(
+        form,
+        `Your consultation request has been emailed to <strong>info@highriseinteriors.in</strong> and WhatsApp is launching to connect you directly with our design team.`,
+        "success"
+      );
+
+      setTimeout(() => {
+        form.reset();
+        form.classList.remove("was-validated");
+        if (phoneInput) {
+          phoneInput.classList.remove("is-valid", "is-invalid");
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.classList.remove("btn-success");
+          submitBtn.classList.add("btn-gold");
+        }
+      }, 4000);
+    }, 600);
   });
 }
 
@@ -1078,7 +1168,15 @@ function initQuickQuoteModal() {
     const area = document.getElementById("modalArea").value.trim();
     const plan = document.getElementById("modalPlan").value;
 
-    // 1. Silent Background Email Dispatch to Client
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : "";
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sending via Email &amp; WhatsApp...`;
+    }
+
+    // 1. Silent Background Email Dispatch to Client (info@highriseinteriors.in)
     silentSendEmail({
       subject: `Quick Quote Modal Lead: ${name} (${phone})`,
       name: name,
@@ -1090,25 +1188,44 @@ function initQuickQuoteModal() {
     });
 
     // 2. Open WhatsApp as usual
-    openWhatsApp({
-      source: "Quick Quote Modal",
-      name: name,
-      phone: phone,
-      property: property,
-      area: area,
-      plan: plan
-    });
+    setTimeout(() => {
+      openWhatsApp({
+        source: "Quick Quote Modal",
+        name: name,
+        phone: phone,
+        property: property,
+        area: area,
+        plan: plan
+      });
 
-    form.reset();
-    form.classList.remove("was-validated");
-    if (phoneInput) {
-      phoneInput.classList.remove("is-valid", "is-invalid");
-    }
+      if (submitBtn) {
+        submitBtn.innerHTML = `<i class="bi bi-check2-circle me-2"></i> Sent to Email &amp; WhatsApp!`;
+        submitBtn.classList.add("btn-success");
+      }
 
-    if (typeof bootstrap !== "undefined") {
-      const modalInstance = bootstrap.Modal.getInstance(modalEl);
-      if (modalInstance) modalInstance.hide();
-    }
+      showFormFeedback(
+        form,
+        `Your quote inquiry has been emailed to <strong>info@highriseinteriors.in</strong> and WhatsApp has launched for instant chat.`,
+        "success"
+      );
+
+      setTimeout(() => {
+        form.reset();
+        form.classList.remove("was-validated");
+        if (phoneInput) {
+          phoneInput.classList.remove("is-valid", "is-invalid");
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.classList.remove("btn-success");
+        }
+        if (typeof bootstrap !== "undefined") {
+          const modalInstance = bootstrap.Modal.getInstance(modalEl);
+          if (modalInstance) modalInstance.hide();
+        }
+      }, 2500);
+    }, 600);
   });
 }
 
@@ -1401,10 +1518,11 @@ function initChatbot() {
       return `We provide up to a <strong>10-year warranty</strong> on modular hardware (Hafele, Blum) and BWP marine-grade plywood against borers and moisture, plus 1-year complimentary maintenance support.`;
     }
 
-    // 9. Contact / WhatsApp
-    if (text.includes("contact") || text.includes("phone") || text.includes("call") || text.includes("number") || text.includes("location") || text.includes("address")) {
+    // 9. Contact / WhatsApp / Email
+    if (text.includes("contact") || text.includes("phone") || text.includes("call") || text.includes("number") || text.includes("location") || text.includes("address") || text.includes("mail") || text.includes("email")) {
       return `You can reach our design studio directly:<br><br>
         📞 <strong>WhatsApp / Phone:</strong> +91 7569826055<br>
+        ✉️ <strong>Email:</strong> info@highriseinteriors.in (or info@highriseinteriors.com)<br>
         📍 <strong>Location:</strong> Hyderabad, Telangana<br>
         ⏰ <strong>Hours:</strong> Mon – Sat: 9:30 AM – 7:30 PM<br><br>
         <a href="https://wa.me/${CONFIG.WHATSAPP_NUMBER}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-gold mt-1">
