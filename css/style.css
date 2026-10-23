@@ -2194,6 +2194,22 @@ main#mainContent > section.hero-service-split {
   background: var(--gold-dark);
 }
 
+/* Drawer & Modal Close Button Styling */
+.btn-close {
+  background-size: 0.9em;
+  padding: 0.45rem;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease, background-color 0.25s ease;
+}
+
+.btn-close:hover,
+.btn-close:focus {
+  opacity: 1;
+  transform: rotate(90deg) scale(1.08);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .drawer-photo-grid .drawer-img-tile {
   height: 90px;
   border: 1px solid var(--border-gold-light);
@@ -5015,6 +5031,33 @@ select.form-select,
   background-color: #14171E !important;
   color: #FFFFFF !important;
   border-right: 1px solid var(--border-gold) !important;
+}
+
+[data-theme="dark"] .offcanvas-header {
+  border-color: rgba(255, 213, 79, 0.2) !important;
+}
+
+/* Dark Mode Close Buttons (Offcanvas Drawer & Modals) */
+[data-theme="dark"] .btn-close,
+[data-theme="dark"] .offcanvas-header .btn-close,
+[data-theme="dark"] .modal-header .btn-close,
+[data-theme="dark"] .btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%) !important;
+  opacity: 0.9 !important;
+}
+
+[data-theme="dark"] .btn-close:hover,
+[data-theme="dark"] .btn-close:focus,
+[data-theme="dark"] .offcanvas-header .btn-close:hover,
+[data-theme="dark"] .offcanvas-header .btn-close:focus,
+[data-theme="dark"] .modal-header .btn-close:hover,
+[data-theme="dark"] .modal-header .btn-close:focus,
+[data-theme="dark"] .btn-close-white:hover,
+[data-theme="dark"] .btn-close-white:focus {
+  opacity: 1 !important;
+  filter: invert(72%) sepia(51%) saturate(450%) hue-rotate(5deg) brightness(115%) contrast(95%) drop-shadow(0 0 6px rgba(255, 213, 79, 0.7)) !important;
+  background-color: rgba(255, 213, 79, 0.15) !important;
+  transform: rotate(90deg) scale(1.12);
 }
 
 [data-theme="dark"] .luxxu-drawer-links .nav-link {

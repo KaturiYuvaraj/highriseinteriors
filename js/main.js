@@ -1740,15 +1740,18 @@ function initThemeToggle() {
     const moonIcons = document.querySelectorAll(".theme-icon-moon");
     const sunIcons = document.querySelectorAll(".theme-icon-sun");
     const switches = document.querySelectorAll(".theme-switch-input");
+    const closeButtons = document.querySelectorAll(".btn-close");
 
     if (theme === "dark") {
       moonIcons.forEach(el => el.classList.add("d-none"));
       sunIcons.forEach(el => el.classList.remove("d-none"));
       switches.forEach(sw => sw.checked = true);
+      closeButtons.forEach(btn => btn.classList.add("btn-close-white"));
     } else {
       moonIcons.forEach(el => el.classList.remove("d-none"));
       sunIcons.forEach(el => el.classList.add("d-none"));
       switches.forEach(sw => sw.checked = false);
+      closeButtons.forEach(btn => btn.classList.remove("btn-close-white"));
     }
   };
 
