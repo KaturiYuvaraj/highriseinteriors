@@ -3072,13 +3072,53 @@ main#mainContent > section.hero-service-split {
 }
 
 /* --- 20. TESTIMONIALS --- */
+.testimonials-swiper {
+  overflow: hidden;
+}
+
+.testimonials-swiper .swiper-wrapper {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.testimonials-swiper .swiper-slide {
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 .testimonial-card {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
   transition: var(--transition-smooth);
+}
+
+.testimonial-card .testimonial-rating {
+  flex-shrink: 0;
+}
+
+.testimonial-card .testimonial-quote {
+  flex-grow: 1 !important;
+  margin-bottom: 1.5rem !important;
+  text-align: justify !important;
+  text-justify: inter-word;
+  text-align-last: left;
+  line-height: 1.68 !important;
+}
+
+.testimonial-author-block,
+.testimonial-card .border-top {
+  margin-top: auto !important;
+  flex-shrink: 0;
 }
 
 .client-avatar {
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--bg-ivory);
   border: 2px solid var(--gold-accent);
@@ -5948,7 +5988,9 @@ select.form-select,
     text-align: left !important;
   }
   .testimonial-quote {
-    text-align: left !important;
+    text-align: justify !important;
+    text-justify: inter-word;
+    text-align-last: left;
     font-size: 0.9rem !important;
     line-height: 1.6 !important;
   }
@@ -6274,8 +6316,10 @@ p, .lead, .section-subtitle, .section-lead, .testimonial-quote, .accordion-body 
 
 /* --- 7. Testimonials & Accordion FAQ --- */
 .testimonial-card .testimonial-quote {
-  text-align: left !important;
-  line-height: 1.65 !important;
+  text-align: justify !important;
+  text-justify: inter-word;
+  text-align-last: left;
+  line-height: 1.68 !important;
 }
 
 .testimonial-card .testimonial-author,
