@@ -6159,16 +6159,21 @@ p, .lead, .section-subtitle, .section-lead, .testimonial-quote, .accordion-body 
 #about .section-badge,
 #about .section-title,
 #about .gold-divider,
-#about p,
-#about .lead,
 #editorial .section-badge,
 #editorial .section-title,
-#editorial .gold-divider,
-#editorial p,
-#editorial .lead {
+#editorial .gold-divider {
   text-align: left !important;
   margin-left: 0 !important;
   margin-right: auto !important;
+}
+
+#about p,
+#about .lead,
+#editorial p,
+#editorial .lead {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  text-align-last: left !important;
 }
 
 /* --- 4. Flawless Card Body Alignment (All Categories, Rooms, Estates, Materials) --- */
