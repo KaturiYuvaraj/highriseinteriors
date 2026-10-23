@@ -3099,13 +3099,20 @@ main#mainContent > section.hero-service-split {
   flex-shrink: 0;
 }
 
-.testimonial-card .testimonial-quote {
+.testimonial-card .testimonial-quote,
+.testimonial-quote {
   flex-grow: 1 !important;
   margin-bottom: 1.5rem !important;
   text-align: justify !important;
-  text-justify: inter-word;
-  text-align-last: left;
+  text-justify: inter-word !important;
+  text-align-last: left !important;
   line-height: 1.68 !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  text-align-last: left !important;
 }
 
 .testimonial-author-block,
