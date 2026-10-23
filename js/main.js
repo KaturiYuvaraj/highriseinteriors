@@ -13,9 +13,8 @@ const CONFIG = {
   // Official Business WhatsApp Number (International format without '+' sign)
   WHATSAPP_NUMBER: "917569826055",
 
-  // Official Client Notification Emails (Dispatches to both info@highriseinteriors.in and info@highriseinteriors.com)
+  // Official Client Notification Email (Dispatches to info@highriseinteriors.in)
   CLIENT_EMAIL: "info@highriseinteriors.in",
-  SECONDARY_EMAIL: "info@highriseinteriors.com",
 
   // Business Profile Details
   COMPANY_NAME: "High Rise Interiors",
@@ -759,13 +758,12 @@ function initTestimonialsSwiper() {
 // SILENT BACKGROUND EMAIL DISPATCH (FORMSUBMIT AJAX API)
 // =============================================================================
 /**
- * Silently sends lead information to client email (info@highriseinteriors.in & backup info@highriseinteriors.com)
+ * Silently sends lead information to client email (info@highriseinteriors.in)
  * without interrupting WhatsApp redirect.
  * @param {Object} data - Lead form data
  */
 function silentSendEmail(data = {}) {
   const primaryEmail = CONFIG.CLIENT_EMAIL || "info@highriseinteriors.in";
-  const secondaryEmail = CONFIG.SECONDARY_EMAIL || "info@highriseinteriors.com";
   const endpoint = `https://formsubmit.co/ajax/${primaryEmail}`;
 
   const submissionDate = new Date().toLocaleString("en-IN", {
@@ -776,7 +774,6 @@ function silentSendEmail(data = {}) {
 
   const payload = {
     _subject: data.subject || `New High Rise Interiors Enquiry: ${data.name || "Client"} (${data.phone || ""})`,
-    _cc: secondaryEmail,
     _template: "table",
     _captcha: "false",
     "Client Name": data.name || "N/A",
@@ -800,7 +797,7 @@ function silentSendEmail(data = {}) {
     // Non-blocking
   }
 
-  // 2. Dual Asynchronous Email Dispatch (Primary + Secondary)
+  // 2. Asynchronous Email Dispatch to official address
   try {
     fetch(endpoint, {
       method: "POST",
@@ -816,25 +813,7 @@ function silentSendEmail(data = {}) {
         console.log(`[HRI Lead Engine] Lead notification email dispatched to ${primaryEmail}:`, resData);
       })
       .catch((err) => {
-        console.warn(`[HRI Lead Engine] Primary dispatch queued:`, err.message);
-      });
-
-    // Secondary dispatch to info@highriseinteriors.com ensuring 100% deliverability
-    fetch(`https://formsubmit.co/ajax/${secondaryEmail}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({ ...payload, _subject: `[Copy] ${payload._subject}` }),
-      keepalive: true
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        console.log(`[HRI Lead Engine] Secondary notification dispatched to ${secondaryEmail}:`, resData);
-      })
-      .catch((err) => {
-        console.warn(`[HRI Lead Engine] Secondary dispatch notice:`, err.message);
+        console.warn(`[HRI Lead Engine] Email dispatch queued:`, err.message);
       });
   } catch (err) {
     console.warn("[HRI Lead Engine] Background dispatch notice:", err.message);
@@ -1062,7 +1041,7 @@ function initContactForm() {
       submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sending via Email &amp; WhatsApp...`;
     }
 
-    // 1. Silent Background Email Dispatch to info@highriseinteriors.in (and CC info@highriseinteriors.com)
+    // 1. Silent Background Email Dispatch to info@highriseinteriors.in
     silentSendEmail({
       subject: `New Interior Consultation Lead: ${name} (${phone})`,
       name: name,
@@ -1522,7 +1501,7 @@ function initChatbot() {
     if (text.includes("contact") || text.includes("phone") || text.includes("call") || text.includes("number") || text.includes("location") || text.includes("address") || text.includes("mail") || text.includes("email")) {
       return `You can reach our design studio directly:<br><br>
         📞 <strong>WhatsApp / Phone:</strong> +91 7569826055<br>
-        ✉️ <strong>Email:</strong> info@highriseinteriors.in (or info@highriseinteriors.com)<br>
+        ✉️ <strong>Email:</strong> info@highriseinteriors.in<br>
         📍 <strong>Location:</strong> Hyderabad, Telangana<br>
         ⏰ <strong>Hours:</strong> Mon – Sat: 9:30 AM – 7:30 PM<br><br>
         <a href="https://wa.me/${CONFIG.WHATSAPP_NUMBER}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-gold mt-1">
